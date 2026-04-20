@@ -230,3 +230,48 @@ tar czf faka_backup_$(date +%Y%m%d).tar.gz /var/www/faka/
 | PHP-FPM | `/var/log/php8.1-fpm.log` |
 | Infini plugin | `/var/www/faka/app/Pay/Infini/runtime.log` |
 | acg-faka system | `/var/www/faka/runtime/` |
+
+## Hermes agent prompt
+
+Copy the prompt below into Hermes agent directly.
+
+```text
+Deploy acg-faka with the Infini payment plugin from GitHub to my VPS.
+
+Repository:
+- REPO_URL = https://github.com/Guranta/faka.git
+
+Requirements:
+1. Install nginx, mysql-server, php8.1-fpm and required PHP extensions
+2. Clone the repository to /var/www/faka
+3. Configure nginx for acg-faka rewrite rules
+4. Create a MySQL database and user
+5. Update /var/www/faka/config/database.php with the database credentials
+6. Set correct ownership and permissions for /var/www/faka
+7. Start and enable nginx, mysql, and php8.1-fpm
+8. If DOMAIN is blank, do not configure final SSL yet; tell me exactly where to fill the domain later
+9. After deployment, tell me:
+   - where to fill the domain
+   - where to fill Infini Key ID / Secret Key
+   - the webhook URL for Infini
+
+Variables:
+- DOMAIN = <leave blank for now if domain is not ready>
+- DB_NAME = acgfaka
+- DB_USER = acgfaka
+- DB_PASS = generate on server if blank
+- DB_ROOT_PASS = generate on server if blank
+
+Verification:
+- confirm nginx/php-fpm/mysql are running
+- confirm the site is reachable by IP or temporary host
+- confirm app/Pay/Infini exists
+- confirm the admin panel path
+```
+
+### Values to fill later
+
+- `DOMAIN`: your final domain name
+- `DB_PASS`: let Hermes generate it on the VPS if you do not want to set it manually
+- `DB_ROOT_PASS`: let Hermes generate it on the VPS if you do not want to set it manually
+- `Infini Key ID` and `Infini Secret Key`: fill these in the acg-faka admin panel after deployment
